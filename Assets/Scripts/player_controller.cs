@@ -63,30 +63,20 @@ public class PlayerController : MonoBehaviour
  
  void OnTriggerEnter(Collider other) 
     {
- // Check if the object the player collided with has the "PickUp" tag.
- if (other.gameObject.CompareTag("PickUp")) 
-        {
- // Deactivate the collided object (making it disappear).
-            other.gameObject.SetActive(false);
-
- // Increment the count of "PickUp" objects collected.
-            count = count + 1;
-
- // Update the count display.
-            SetCountText();
-        }
+       if (other.gameObject.CompareTag("PickUp")) 
+       {
+              other.gameObject.SetActive(false);
+              count++;
+              SetCountText();
+       }
     }
 
- // Function to update the displayed count of "PickUp" objects collected.
+
  void SetCountText() 
     {
- // Update the count text with the current count.
         countText.text = "Count: " + count.ToString();
-
- // Check if the count has reached or exceeded the win condition.
  if (count == 14)
         {
- // Display the win text.
             winTextObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "Winner!";
 
@@ -99,16 +89,17 @@ private void OnCollisionEnter(Collision collision)
 {
  if (collision.gameObject.CompareTag("Enemy"))
     {
- // Destroy the current object
+       Death();
+ 
+    }
+}
+public void Death(){
+       // Destroy the current object
         Destroy(gameObject); 
  
  // Update the winText to display "You Lose!"
         winTextObject.gameObject.SetActive(true);
         winTextObject.GetComponent<TextMeshProUGUI>().text = "You Lose!";
- 
-    }
-
 }
-
 
 }
